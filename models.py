@@ -69,7 +69,7 @@ class Vehicle(db.Model):
     
     @classmethod
     def get_by_id(cls, id):
-        return cls.query.get_or_404(id)
+        return cls.query.get(id)#get_or_404(id)
 
     @classmethod
     def get_with_drivers(cls, with_drivers):

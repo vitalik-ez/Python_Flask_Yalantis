@@ -17,12 +17,15 @@ def convert_time(time):
 @app.errorhandler(400)
 def custom400(error):
     response = jsonify({'message': error.description['message']})
-    return response
+    return response, 400
 
 @app.errorhandler(404)
 def custom404(error):
-    response = jsonify({'message': error.description['message']})
-    return response
+    if 'message' in error.description:
+        response = jsonify({'message': error.description['message']})
+    else:
+        response = jsonify({'message': "This page doesn't exist"})
+    return response, 404
 
 
 

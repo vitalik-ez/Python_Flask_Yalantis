@@ -30,10 +30,10 @@
 #  http://localhost:5000/vehicles/vehicle/
 
 
-# curl --header "Content-Type: application/json" \
-#  --request PUT \
-#  --data '{"driver_id": 3,"make":"Mercedes-Benz","model":"E211"}' \
-#  http://localhost:5000/vehicles/vehicle/1
+ curl --header "Content-Type: application/json" \
+  --request PUT \
+  --data '{"driver_id": 3,"make":"Mercedes-Benz","model":"S63amg"}' \
+  http://localhost:5000/vehicles/vehicle/1
 
 
 # curl --header "Content-Type: application/json" \
@@ -41,5 +41,7 @@
 #  http://localhost:5000/vehicles/vehicle/1
 
 
-curl --request POST \
-  http://localhost:5000/vehicles/set_driver/2
+# curl --request POST \
+#  http://localhost:5000/vehicles/set_driver/2
+
+# curl -i http://127.0.0.1:5000/drivers/driver?created_at__gte=10-31-245021
