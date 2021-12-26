@@ -101,7 +101,7 @@ def delete_driver(driver_id):
 
 # Vehicle
 
-@app.route('/vehicles/vehicle/', methods = ['GET'])
+@app.route('/vehicles/vehicle', methods = ['GET'])
 def get_list_vehicles():
     if request.args.get('with_drivers'):
         with_drivers = request.args.get('with_drivers')
@@ -125,6 +125,7 @@ def create_vehicle():
     except Exception as e:
         abort(400, {'message': str(e)})
     return schema.dump(load_data), 201
+
 
 @app.route('/vehicles/vehicle/<int:vehicle_id>', methods = ['GET'])
 def get_vehicle(vehicle_id):
@@ -161,7 +162,7 @@ def delete_vehicle(vehicle_id):
 
     Vehicle.delete(vehicle)
     
-    return {"delete_driver" : "Vehicle with id = {} succeed remove".format(vehicle_id)}
+    return {"delete_vehicle" : "Vehicle with id = {} succeed remove".format(vehicle_id)}
 
 
 
