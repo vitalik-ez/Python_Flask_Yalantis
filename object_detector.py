@@ -5,6 +5,27 @@ import numpy as np
 from PIL import Image
 import io
 
+class Dataset:
+
+    def __init__(self, file_path = './final_model.h5'):
+        self.file_path = file_path
+
+    def load_data(self):
+        self.data = load_model(self.file_path)
+        return self.data
+
+
+CONSTANT_COUNT_IMAGES_IN_DATASET = 855
+
+
+def load_dataset():
+    dataset = Dataset()
+    return dataset.load_data()
+
+def increase_dataset():
+    return 2 * CONSTANT_COUNT_IMAGES_IN_DATASET
+
+
 class ImagePreprocessing:
     
     def __init__(self, width = 50, height = 50) -> None:
@@ -28,7 +49,7 @@ class SelectiveSearch():
         self._ss.setBaseImage(image)
         self._ss.switchToSelectiveSearchFast()
         rects = self._ss.process()
-        print("[INFO] {} total region proposals".format(len(rects)))
+        #print("[INFO] {} total region proposals".format(len(rects)))
         return rects
 
 
