@@ -6,7 +6,18 @@ from PIL import Image
 import io
 
 class ImagePreprocessing:
-    pass
+    
+    def __init__(self, width = 50, height = 50) -> None:
+        self._width = width
+        self._height = height
+
+    def prepare_image(self, image):
+        image = Image.open(io.BytesIO(image))
+        image = np.float32(image.getdata()).reshape(image.size[0], image.size[1], 3)
+        image = cv2.resize(image, (self._width, self._height))
+        image = image.reshape(1, self._width, self._height, 3)
+        image = image / 255.0
+        return image
 
 class SelectiveSearch():
 
@@ -22,7 +33,6 @@ class SelectiveSearch():
 
 
 
-
 class ObjectDetector():
 
     def __init__(self, file_path = './final_model.h5', width = 50, height = 50) -> None:
@@ -30,19 +40,6 @@ class ObjectDetector():
         self._width = width
         self._height = height
         self._dim = (width, height)
-        
-
-    '''
-     def __prepare_image(image):
-        
-        roi = cv2.cvtColor(roi, cv2.COLOR_BGR2RGB)
-        roi = cv2.resize(roi, (50, 50))
-        roi = img_to_array(roi)
-        roi = roi.reshape(1, 50, 50, 3)
-        roi = roi / 255.0
-    '''
-   
-
 
     def __proposals_objects(self, image, rects):
         self._proposals = []
@@ -54,8 +51,7 @@ class ObjectDetector():
             roi = image[y:y + h, x:x + w] # pay attention x y
             
             #Preprocess
-            roi = self.__prepare_image(roi)
-            
+            roi = ImagePreprocessing().prepare_image(roi)
 
             result = self._model.predict(roi)
             if np.argmax(result, axis=-1)[0] == 0 and result[0][0] > 0.98:
@@ -68,17 +64,8 @@ class ObjectDetector():
     def detect_object(self, image, ss: SelectiveSearch = None):
         #rects = ss.selective_search(image)
         #self.__proposals_objects(rects, image)
-        
-        image = Image.open(io.BytesIO(image))
-        width, height = image.size[0], image.size[1]
-        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", width, height)
-        image = np.float32(image.getdata()).reshape(1, image.size[0], image.size[1], 3)
-        image = cv2.resize(image[0], (50, 50))
-        image = image.reshape(1, 50, 50, 3)
-        image = image / 255.0
-        print("!!!!!!!!", image.shape)
-        
-
+        image = ImagePreprocessing().prepare_image(image)
+    
         result = self._model.predict(image)
         result = {"traffic_cones": str(result[0][0]), "no_traffic_cones": str(result[0][1])}
         return result

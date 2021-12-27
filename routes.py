@@ -190,9 +190,10 @@ def put_or_drop_off_driver(vehicle_id):
 @app.route("/predict", methods=["POST"])
 def predict():
     if request.files.get("image"):
+        if request.files["image"].content_type.split('/')[0] != 'image':
+            return {"error":"ONLY image are allowed"}, 404
         image = request.files["image"].read()
         result = model.detect_object(image)
-        #result = {"ok":"image"}
     else:
-        result = {"error":"image don't find"}
+        result = {"error":"image don't find"}, 404
     return result
