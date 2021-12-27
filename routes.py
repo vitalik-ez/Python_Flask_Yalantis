@@ -1,8 +1,7 @@
 from flask import request, jsonify, abort
-from main import app
+from main import app, model
 from models import Driver, Vehicle, DriverSchema, VehicleSchema
 from main import db
-
 from datetime import datetime
 
 
@@ -188,3 +187,12 @@ def put_or_drop_off_driver(vehicle_id):
     
 
     
+@app.route("/predict", methods=["POST"])
+def predict():
+    if request.files.get("image"):
+        image = request.files["image"].read()
+        result = model.detect_object(image)
+        #result = {"ok":"image"}
+    else:
+        result = {"error":"image don't find"}
+    return result

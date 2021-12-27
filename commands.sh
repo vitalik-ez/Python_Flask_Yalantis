@@ -1,17 +1,17 @@
 #!/bin/bash 
 
 
- curl --header "Content-Type: application/json" \
-  --request POST \
-  --data '{"first_name":"Vitaliy","last_name":"Yezghor"}' \
-  http://localhost:5000/drivers/driver
-
-
-
 # curl --header "Content-Type: application/json" \
-#  --request PUT \
-#  --data '{"first_name":"Vitaliy","last_name":"KPI TEF"}' \
-#  http://localhost:5000/drivers/driver/3
+#  --request POST \
+#  --data '{"first_name":"Vitaliy","last_name":"Yezghor"}' \
+#  http://localhost:5000/drivers/driver
+
+
+
+ curl --header "Content-Type: application/json" \
+  --request PUT \
+  --data '{"first_name":"Vitaliy","last_name":"KPI TEF"}' \
+  http://localhost:5000/drivers/driver/3
 
 
 # curl --header "Content-Type: application/json" \

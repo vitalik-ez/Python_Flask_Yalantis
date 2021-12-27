@@ -38,13 +38,15 @@ def test_create_driver(client):
 
 
 def test_update_driver(client):
-    rv = client.put('/drivers/driver', json={
-        "first_name" : "Vitaliy",
-        "last_name" : "Yezghor"
+    rv = client.put('/drivers/driver/1', json={
+        "first_name" : "Mike",
+        "last_name" : "Tyson"
     })
     json_data = rv.get_json()
-    assert rv.status_code == 201
-    assert json_data['id'] == 3
+    assert rv.status_code == 200
+    assert json_data['update_driver']['id'] == 1
+    assert json_data['update_driver']['first_name'] == "Mike"
+    assert json_data['update_driver']['last_name'] == "Tyson"
 
 
 def test_get_driver_by_id(client):

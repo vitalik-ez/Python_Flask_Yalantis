@@ -3,7 +3,7 @@ import pytest
 import os
 import tempfile
 
-from main import app as flask_app, create_app, db, migrate
+from main import app as flask_app, create_app, db, model
 
 
 @pytest.fixture
@@ -37,5 +37,8 @@ def database():
     db.drop_all()
 
 
+@pytest.fixture
+def model_object_detection():
+    yield model
 
 
